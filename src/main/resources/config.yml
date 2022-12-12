@@ -1,0 +1,5 @@
+# Configuration file for SMPChat
+
+prefix: '<color:#CF3F3A>[<color:#1155CC>SMP<color:#CF3F3A>]<reset>'
+
+# Private message section

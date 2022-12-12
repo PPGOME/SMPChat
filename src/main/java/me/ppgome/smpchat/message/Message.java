@@ -42,6 +42,7 @@ public class Message implements CommandExecutor {
                         if(Bukkit.getServer().getPlayer(recepient) != null) {
                             // Add rest here
                         }
+                        break;
                 }
             }
         }
@@ -49,7 +50,7 @@ public class Message implements CommandExecutor {
     }
 
     // Have this send messages WITH COMPONENTS
-    public void message(){
+    public void message(Player sender, Player recepient, String message, boolean italics, boolean bold, boolean me){
 
     }
 }
