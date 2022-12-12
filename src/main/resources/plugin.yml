@@ -1,0 +1,7 @@
+name: SMPChat
+version: ${project.version}
+main: me.ppgome.smpchat.SMPChat
+api-version: 1.19
+authors: [ PPGOME ]
+description: A chat-oriented plugin | part of the OwO SMP plugin suite
+website: https://github.com/PPGOME
