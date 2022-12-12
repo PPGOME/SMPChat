@@ -3,3 +3,11 @@
 prefix: '<color:#CF3F3A>[<color:#1155CC>SMP<color:#CF3F3A>]<reset>'
 
 # Private message section
+message:
+  # In hex: i.e. #FFFFFF
+  from-colour: ''
+  mod-colour: ''
+
+error:
+  # Colour of the error message post-prefix.
+  colour: '#ff5252'

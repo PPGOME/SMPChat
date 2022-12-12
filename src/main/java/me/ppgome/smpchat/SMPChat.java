@@ -2,6 +2,11 @@ package me.ppgome.smpchat;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * The main class of the SMPChat plugin. Handles command registry and startup/shutdown output.
+ * @author PPGOME
+ * @version 1.0
+ */
 public final class SMPChat extends JavaPlugin {
 
     /**
