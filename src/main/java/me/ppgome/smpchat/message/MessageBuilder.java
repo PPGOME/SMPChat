@@ -24,9 +24,10 @@ public class MessageBuilder {
     private static final Component PREFIX = MM.deserialize(CONFIG.getString("prefix"));
 
     /**
-     * Builds all global messages and applies custom colours as necessary.
-     * @param sender
-     * @param message
+     * Builds all global messages and applies custom colours as necessary. May not be the most practical but I wanted to
+     * try what I had learned at school in an actual way.
+     * @param sender Player who sent the message
+     * @param message The message the player sent
      * @return Finalized chat message
      */
     public static TextComponent buildMessage(Player sender, Component message) {
@@ -36,9 +37,9 @@ public class MessageBuilder {
 
     /**
      * Builds a private message
-     * @param sender
-     * @param recipient
-     * @param message
+     * @param sender Player who sent the message
+     * @param recipient Player who the message was directed to
+     * @param message The message the player sent
      */
     public static void buildMessage(Player sender, Player recipient, String message) {
     }
@@ -47,11 +48,18 @@ public class MessageBuilder {
 
     /**
      * Builds an error message to be used around the plugin
-     * @param message
-     * @param p
+     * @param message The message defined in the console that outputs for select errors
      */
-    public static TextComponent buildErrorMessage(String message, Player p) {
+    public static TextComponent buildErrorMessage(String message) {
         return Component.text("").append(PREFIX).color(TextColor.fromCSSHexString(CONFIG.getString("error.colour")))
                 .append(Component.text(" " + message));
+    }
+
+    public static String makeString(String[] args) {
+        String string = "";
+        for (String s : args) {
+
+        }
+        return string;
     }
 }

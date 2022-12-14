@@ -1,5 +1,6 @@
 package me.ppgome.smpchat.message;
 
+import com.sun.tools.javac.util.StringUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.ppgome.smpchat.SMPChat;
 import net.kyori.adventure.text.Component;
@@ -15,6 +16,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -43,43 +45,45 @@ public class MessageHandler implements CommandExecutor, Listener {
             if(cmdname.equalsIgnoreCase("msg") || cmdname.equalsIgnoreCase("message")
                     || cmdname.equalsIgnoreCase("whisper") || cmdname.equalsIgnoreCase("tell")) {
                 switch(args.length) {
+                    // If no args
                     case 0:
-                        p.sendMessage(MessageBuilder.buildErrorMessage("You forgot a player name!", p));
+                        if(CONFIG.getString("error.errormessages.msgnoargs") != null) {
+                            p.sendMessage(MessageBuilder.buildErrorMessage(CONFIG.getString("error.errormessages.msgnoargs")));
+                        } else {
+                            p.sendMessage(MessageBuilder.buildErrorMessage("Please tell an admin that error.errormessages.msgnomsg is empty!"));
+                        }
                         break;
+                    // If player specified but no message given
                     case 1:
-                        p.sendMessage(MessageBuilder.buildErrorMessage("Planning on sending " + p.getName() + " a message?", p));
-                        break;
-                    case 2:
                         String recepient = args[0];
+                        String error = CONFIG.getString("error.errormessages.msgnomsg");
+                        if(error != null) {
+                            if(Bukkit.getServer().getPlayer(recepient) != null) {
+                                p.sendMessage(MessageBuilder.buildErrorMessage(error.replace("{PLAYER}", recepient)));
+                            } else {
+                                MessageBuilder.buildErrorMessage("That player doesn't seem to be online.");
+                            }
+                        } else {
+                            p.sendMessage(MessageBuilder.buildErrorMessage("Please tell an admin that error.errormessages.msgnomsg is empty!"));
+                        }
+                        break;
+                    // If both player and message are specified
+                    case 2:
+                        recepient = args[0];
+                        // Does the player exist?
                         if(Bukkit.getServer().getPlayer(recepient) != null) {
-                            // Add rest here
+                            // Message
+                        // Or is it being sent to the console?
                         } else if(recepient.equalsIgnoreCase("console")) {
                             // Add rest here
                         } else {
-                            p.sendMessage("That player doesn't exist?");
+                            p.sendMessage(MessageBuilder.buildErrorMessage("That player doesn't seem to be online."));
                         }
                         break;
                 }
             }
         }
         return false;
-    }
-
-    // Have this send messages WITH COMPONENTS
-    public void message(Player sender, Player recepient, String message, boolean italics, boolean bold, boolean mod) {
-        String msgcolour = "";
-        if (mod) {msgcolour = CONFIG.getString("mod-colour");}
-        // Add system to grab chat colour from persistentdatacontainer of player
-
-        if (CONFIG.getString("prefix") != null && CONFIG.getString("message.from-colour") != null) {
-            TextComponent pmessagebuilder = Component.text("").append(prefix)
-                    .color(TextColor.fromHexString(CONFIG.getString("message.from-colour")))
-                    .decoration(TextDecoration.BOLD, true)
-                    .append(Component.text(" From: " + sender.getName() + " > "))
-                    .decoration(TextDecoration.ITALIC, italics).decoration(TextDecoration.BOLD, bold)
-                    .color(TextColor.fromHexString(msgcolour))
-                    .append(Component.text(message));
-        }
     }
 
     @EventHandler

@@ -11,3 +11,7 @@ message:
 error:
   # Colour of the error message post-prefix.
   colour: '#ff5252'
+  errormessages:
+    msgnoargs: 'You forgot a player name!'
+    msgnomsg: 'Planning on sending {PLAYER} a message?'
+    cannotfindplayer: "That player doesn't appear to be online."

@@ -8,11 +8,6 @@ import java.util.UUID;
 
 public class PlayerInteractor {
 
-    private Player player;
-    private UUID playeruuid;
-    private String chatcolour;
-
-
     public static void setChatcolour(String chatcolour, Player p) {
         NamespacedKey hex = new NamespacedKey(SMPChat.getPlugin(), "chatcolour");
         p.getPersistentDataContainer().set(hex, PersistentDataType.STRING, chatcolour);

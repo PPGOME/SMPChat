@@ -40,11 +40,11 @@ public class ColourApplier implements CommandExecutor {
                             p.sendMessage("Your chat colour is now " + PlayerInteractor.getChatcolour(p));
                             return true;
                         } else {
-                            MessageBuilder.buildErrorMessage("Your hex code is not valid! Please use a correct one.", p);
+                            p.sendMessage(MessageBuilder.buildErrorMessage("Your hex code is not valid! Please use a correct one."));
                             return false;
                         }
                     } else {
-                        MessageBuilder.buildErrorMessage("Your hex code did not start with a #. Please add it!", p);
+                        p.sendMessage(MessageBuilder.buildErrorMessage("Your hex code did not start with a #. Please add it!"));
                         return false;
                     }
                 }
