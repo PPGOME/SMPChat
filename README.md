@@ -20,7 +20,7 @@ Moderation
 - `/bc [message], /broadcast [message]` Sends message to all players on the server in green.
 
 ## Permissions
-| Command                 | Permission     |
-| :---------------------: | :------------: |
-| /msg, /tell, /whisper   | smp.msg        |
-| /chatcolor, /chatcolour | smp.chatcolour |
+| Command                 | Permission         |
+| :---------------------: | :----------------: |
+| /msg, /tell, /whisper   | smpchat.msg        |
+| /chatcolor, /chatcolour | smpchat.chatcolour |
