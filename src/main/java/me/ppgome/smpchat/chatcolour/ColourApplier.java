@@ -1,6 +1,8 @@
 package me.ppgome.smpchat.chatcolour;
 
+import me.ppgome.smpchat.PlayerInteractor;
 import me.ppgome.smpchat.SMPChat;
+import me.ppgome.smpchat.message.MessageBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
@@ -12,6 +14,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that implements CommandExecutor and is used to validate the /chatcolour command.
+ * @author PPGOME
+ * @version 1.0
+ * @see PlayerInteractor
+ */
 public class ColourApplier implements CommandExecutor {
 
     private final FileConfiguration CONFIG = SMPChat.getPlugin().getConfig();
@@ -25,26 +33,25 @@ public class ColourApplier implements CommandExecutor {
             if (command.getName().equalsIgnoreCase("chatcolour") || command.getName().equalsIgnoreCase("chatcolor")) {
                 if (args.length == 1) {
                     String message = args[0];
-                    if (message.substring(0).equals("#")) {
+                    p.sendMessage(message);
+                    if (message.charAt(0) == '#') {
                         if (message.length() == 7) {
-                            //Add persistentdatacontainer here
+                            PlayerInteractor.setChatcolour(message, p);
+                            p.sendMessage("Your chat colour is now " + PlayerInteractor.getChatcolour(p));
+                            return true;
                         } else {
-                            errorMessage("Your hex code is not valid! Please use a correct one.", p);
+                            MessageBuilder.buildErrorMessage("Your hex code is not valid! Please use a correct one.", p);
+                            return false;
                         }
                     } else {
-                        errorMessage("Your hex code did not start with a #. Please add it!", p);
+                        MessageBuilder.buildErrorMessage("Your hex code did not start with a #. Please add it!", p);
+                        return false;
                     }
                 }
             }
             return false;
         }
         return false;
-    }
-
-    public void errorMessage(String message, Player p) {
-        TextComponent errormsg = Component.text("").append(PREFIX).color(TextColor.fromCSSHexString(CONFIG.getString("error.colour")))
-                .append(Component.text(message));
-        p.sendMessage(errormsg);
     }
 
 }

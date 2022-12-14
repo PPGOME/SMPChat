@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.ppgome.smpchat"},{"l":"me.ppgome.smpchat.message"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.ppgome.smpchat"},{"l":"me.ppgome.smpchat.chatcolour"},{"l":"me.ppgome.smpchat.message"}];updateSearchResults();

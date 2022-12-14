@@ -1,5 +1,6 @@
 package me.ppgome.smpchat.message;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
 import me.ppgome.smpchat.SMPChat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -12,6 +13,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -19,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * @author PPGOME
  * @version 1.0
  */
-public class MessageCommand implements CommandExecutor {
+public class MessageHandler implements CommandExecutor, Listener {
 
     private final FileConfiguration CONFIG = SMPChat.getPlugin().getConfig();
     MiniMessage mm = MiniMessage.miniMessage();
@@ -38,15 +41,13 @@ public class MessageCommand implements CommandExecutor {
             Player p = (Player)sender;
             String cmdname = command.getName();
             if(cmdname.equalsIgnoreCase("msg") || cmdname.equalsIgnoreCase("message")
-                    || cmdname.equalsIgnoreCase("whisper")) {
+                    || cmdname.equalsIgnoreCase("whisper") || cmdname.equalsIgnoreCase("tell")) {
                 switch(args.length) {
                     case 0:
-                        // Replace with component
-                        p.sendMessage("You forgot a player name!");
+                        p.sendMessage(MessageBuilder.buildErrorMessage("You forgot a player name!", p));
                         break;
                     case 1:
-                        // Replace with component
-                        p.sendMessage("Planning on sending " + p.getName() + " a message?");
+                        p.sendMessage(MessageBuilder.buildErrorMessage("Planning on sending " + p.getName() + " a message?", p));
                         break;
                     case 2:
                         String recepient = args[0];
@@ -78,6 +79,16 @@ public class MessageCommand implements CommandExecutor {
                     .decoration(TextDecoration.ITALIC, italics).decoration(TextDecoration.BOLD, bold)
                     .color(TextColor.fromHexString(msgcolour))
                     .append(Component.text(message));
+        }
+    }
+
+    @EventHandler
+    public void onChat(AsyncChatEvent event) {
+        Player p = event.getPlayer();
+        Component message = event.message();
+        event.setCancelled(true);
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            online.sendMessage(MessageBuilder.buildMessage(p, message));
         }
     }
 }

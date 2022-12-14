@@ -1,5 +1,9 @@
 package me.ppgome.smpchat;
 
+import me.ppgome.smpchat.chatcolour.ColourApplier;
+import me.ppgome.smpchat.message.MessageHandler;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -7,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author PPGOME
  * @version 1.0
  */
-public final class SMPChat extends JavaPlugin {
+public final class SMPChat extends JavaPlugin implements Listener, CommandExecutor {
 
     /**
      * Creates an instance of the plugin
@@ -25,6 +29,16 @@ public final class SMPChat extends JavaPlugin {
      */
     public void onEnable() {
         System.out.println("SMPChat has started!");
+
+        plugin = this;
+
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
+        this.getCommand("chatcolour").setExecutor(new ColourApplier());
+        this.getCommand("message").setExecutor(new MessageHandler());
+
+        getServer().getPluginManager().registerEvents(new MessageHandler(), this);
     }
 
     @Override

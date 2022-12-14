@@ -5,3 +5,23 @@ api-version: 1.19
 authors: [ PPGOME ]
 description: A chat-oriented plugin | part of the OwO SMP plugin suite
 website: https://github.com/PPGOME
+
+commands:
+  message:
+    aliases: [msg, whisper, tell]
+    usage: "Usage: /msg [player] [message]"
+    permission: smpchat.msg
+    permission-message: You do not have permission to message others.
+  chatcolour:
+    aliases: chatcolor
+    usage: "Usage: /chatcolour [Hex colour code]"
+    permission: smpchat.chatcolour
+    permission-message: You do not have permission to change your chat colour.
+
+permissions:
+  smpchat.msg:
+    default: true
+    description: Allows a player to send a private message to another player.
+  smpchat.chatcolour:
+    default: true
+    description: Allows a player to change the colour of their chat messages.
