@@ -1,5 +1,7 @@
 # SMPChat
  A chat-oriented plugin designed for the OwO SMP
+ 
+ Heavily inspired by https://github.com/NerdNu/NerdMessage
 
 ## Commands
 Sends private message to player
