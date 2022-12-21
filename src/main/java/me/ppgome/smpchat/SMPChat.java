@@ -37,6 +37,8 @@ public final class SMPChat extends JavaPlugin implements Listener, CommandExecut
 
         this.getCommand("chatcolour").setExecutor(new ColourApplier());
         this.getCommand("message").setExecutor(new MessageHandler());
+        this.getCommand("mmsg").setExecutor(new MessageHandler());
+        this.getCommand("broadcast").setExecutor(new MessageHandler());
 
         getServer().getPluginManager().registerEvents(new MessageHandler(), this);
     }

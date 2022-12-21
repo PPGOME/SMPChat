@@ -5,6 +5,7 @@ import me.ppgome.smpchat.SMPChat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public class MessageBuilder {
     private static final FileConfiguration CONFIG = SMPChat.getPlugin().getConfig();
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private static final Component PREFIX = MM.deserialize(CONFIG.getString("prefix"));
+    private static final Component BCPREFIX = MM.deserialize(CONFIG.getString("message.broadcast-prefix"));
 
     /**
      * Builds all global messages and applies custom colours as necessary. May not be the most practical but I wanted to
@@ -40,26 +42,61 @@ public class MessageBuilder {
      * @param sender Player who sent the message
      * @param recipient Player who the message was directed to
      * @param message The message the player sent
+     * @param sent Determines which version to build. Players who sent get a confirmation message while players who did not get the normal message.
      */
-    public static void buildMessage(Player sender, Player recipient, String message) {
+    public static TextComponent buildMessage(Player sender, Player recipient, Component message, boolean sent, boolean frommod) {
+
+        TextComponent recieve = Component.text("").append(PREFIX).append(Component.text(" From " + sender.getName() + ": ")
+                .color(TextColor.fromHexString(CONFIG.getString("message.from-colour"))).decorate(TextDecoration.ITALIC));
+
+        TextComponent send = Component.text("").append(PREFIX).append(Component.text(" To " + recipient.getName() + ": ")
+                .color(TextColor.fromHexString(CONFIG.getString("message.from-colour"))).decorate(TextDecoration.ITALIC));
+
+        if(frommod) {
+            if(!sent) {
+                return recieve.append(message.color(TextColor.fromHexString(CONFIG.getString("message.mod-colour"))));
+            } else {
+                return send.append(message.color(TextColor.fromHexString(CONFIG.getString("message.mod-colour"))));
+            }
+        } else {
+            if(!sent) {
+                return recieve.append(message.color(TextColor.fromHexString(CONFIG.getString("message.msgcolour"))));
+            } else {
+                return send.append(message.color(TextColor.fromHexString(CONFIG.getString("message.msgcolour"))));
+            }
+        }
     }
-    public static void buildMessage(Player sender, Player recipient, Component message) {
+
+    /**
+     * Builds a broadcast message
+     * @param message Message to send out
+     * @return Complete message as a component
+     */
+    public static TextComponent broascastBuilder(Component message) {
+        return Component.text("").append(BCPREFIX).append(Component.text(" " + message)
+                .color(TextColor.fromHexString(CONFIG.getString("message.broadcast-colour"))));
     }
 
     /**
      * Builds an error message to be used around the plugin
      * @param message The message defined in the console that outputs for select errors
+     * @return A component of an error message to
      */
     public static TextComponent buildErrorMessage(String message) {
-        return Component.text("").append(PREFIX).color(TextColor.fromCSSHexString(CONFIG.getString("error.colour")))
-                .append(Component.text(" " + message));
+        return Component.text("").append(PREFIX).append(Component.text(" " + message)
+                .color(TextColor.fromHexString(CONFIG.getString("error.colour"))));
     }
 
-    public static String makeString(String[] args) {
-        String string = "";
+    /**
+     * Combines all elements of a string array into a single string
+     * @param args Array to condense into a string
+     * @return a single string
+     */
+    public static TextComponent makeComponent(String[] args) {
+        StringBuilder string = new StringBuilder();
         for (String s : args) {
-
+            string.append(s).append(" ");
         }
-        return string;
+        return Component.text(string.toString().trim());
     }
 }

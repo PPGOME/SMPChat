@@ -17,6 +17,12 @@ commands:
     usage: "Usage: /chatcolour [Hex colour code]"
     permission: smpchat.chatcolour
     permission-message: You do not have permission to change your chat colour.
+  mmsg:
+    usage: "Usage: /mmsg [player] [message]"
+    permission: smpchat.mod
+  broadcast:
+    usage: "Usage: /broadcast [message]"
+    permission: smpchat.mod
 
 permissions:
   smpchat.msg:
@@ -25,3 +31,6 @@ permissions:
   smpchat.chatcolour:
     default: true
     description: Allows a player to change the colour of their chat messages.
+  smpchat.mod:
+    default: false
+    description: Given to moderators of a server for moderation commands.

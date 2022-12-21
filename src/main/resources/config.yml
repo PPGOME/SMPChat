@@ -5,8 +5,11 @@ prefix: '<color:#CF3F3A>[<color:#1155CC>SMP<color:#CF3F3A>]<reset>'
 # Private message section
 message:
   # In hex: i.e. #FFFFFF
-  from-colour: ''
-  mod-colour: ''
+  msgcolour: '#FFFFFF'
+  from-colour: '#F75D59'
+  mod-colour: '#7FE817'
+  broadcast-colour: '#7FE817'
+  broadcast-prefix: '<color:#CF3F3A>[<color:#1155CC>Broadcast<color:#CF3F3A>]<reset>'
 
 error:
   # Colour of the error message post-prefix.
