@@ -24,3 +24,5 @@ Moderation
 | :---------------------: | :----------------: |
 | /msg, /tell, /whisper   | smpchat.msg        |
 | /chatcolor, /chatcolour | smpchat.chatcolour |
+| /mmsg                   | smpchat.mod        |
+| /broadcast              | smpchat.mod        |
