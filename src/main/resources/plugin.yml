@@ -23,6 +23,10 @@ commands:
   broadcast:
     usage: "Usage: /broadcast [message]"
     permission: smpchat.mod
+  mc:
+    aliases: modchat
+    usage: "Usage: /mc [message]"
+    permission: smpchat.mod
 
 permissions:
   smpchat.msg:

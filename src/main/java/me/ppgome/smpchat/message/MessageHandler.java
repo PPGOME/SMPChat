@@ -1,12 +1,9 @@
 package me.ppgome.smpchat.message;
 
-import com.sun.tools.javac.util.StringUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.ppgome.smpchat.SMPChat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -17,7 +14,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -87,13 +83,6 @@ public class MessageHandler implements CommandExecutor, Listener {
                                 playerrec.playSound(playerrec.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
                                 // Send confirmation to sender
                                 p.sendMessage(MessageBuilder.buildMessage(p, playerrec, pmessage, true, false));
-                            } else if(cmdname.equalsIgnoreCase("mmsg")) {
-                                // Send message to recipient
-                                playerrec.sendMessage(MessageBuilder.buildMessage(p, playerrec, pmessage, false, true));
-                                // Play ping sound
-                                playerrec.playSound(playerrec.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-                                // Send confirmation to sender
-                                p.sendMessage(MessageBuilder.buildMessage(p, playerrec, pmessage, true, true));
                             }
                             return true;
                         // Or is it being sent to the console?
@@ -115,6 +104,10 @@ public class MessageHandler implements CommandExecutor, Listener {
             }
         }
         return false;
+    }
+
+    static void sendMessage() {
+
     }
 
     @EventHandler
